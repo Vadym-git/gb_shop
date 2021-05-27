@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% load static %}
+	<title>Oh Girls</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="{% static 'shop/img/favicon.ico' %}" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/font-awesome.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/flaticon.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/slicknav.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/jquery-ui.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/owl.carousel.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/animate.css' %}"/>
+	<link rel="stylesheet" href="{% static 'shop/css/style.css' %}"/>
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<script src="https://js.stripe.com/v3/"></script>
+
+
+<!--	<style>-->
+
+
+<!--		/**-->
+<!-- * The CSS shown here will not be introduced in the Quickstart guide, but shows-->
+<!-- * how you can use CSS to style your Element's container.-->
+<!-- */-->
+<!--.StripeElement {-->
+<!--  box-sizing: border-box;-->
+
+<!--  height: 40px;-->
+
+<!--  padding: 10px 12px;-->
+
+<!--  border: 1px solid transparent;-->
+<!--  border-radius: 4px;-->
+<!--  background-color: white;-->
+
+<!--  box-shadow: 0 1px 3px 0 #e6ebf1;-->
+<!--  -webkit-transition: box-shadow 150ms ease;-->
+<!--  transition: box-shadow 150ms ease;-->
+<!--}-->
+
+<!--.StripeElement&#45;&#45;focus {-->
+<!--  box-shadow: 0 1px 3px 0 #cfd7df;-->
+<!--}-->
+
+<!--.StripeElement&#45;&#45;invalid {-->
+<!--  border-color: #fa755a;-->
+<!--}-->
+
+<!--.StripeElement&#45;&#45;webkit-autofill {-->
+<!--  background-color: #fefde5 !important;}-->
+
+
+<!--	</style>-->
+
+</head>
+<body onload="server_data();">
+
+{% include 'include/header.html' %}
+{% block content %}
+
+
+
+{% endblock content %}
+{% include 'include/footer.html' %}
+	<!--====== Javascripts & Jquery ======-->
+	<script type="text/javascript">
+
+		function add_prod (el){
+			try{
+				var size = document.querySelector('input[name="sc"]:checked').id;
+				}
+			catch(err){
+				document.getElementById(el.id).innerHTML='Please select your size';
+				document.getElementById(el.id).style.backgroundColor="#f51167"; //f51167
+				setTimeout(function(){
+					document.getElementById(el.id).innerHTML='Shop Now';
+					document.getElementById(el.id).style.backgroundColor="#ff9999";
+					}, 2000);
+					return
+					}
+
+		var p_id = el.id;
+		var item =[p_id, size];
+		var results = document.cookie.match ( '(^|;) ?' + 'cart' + '=([^;]*)(;|$)' );
+
+		if (results != null){
+				try{
+					var cart = JSON.parse(results[2]);
+					}
+				catch(err){
+					document.cookie = `cart=[]; path=/; max-age=1296000`;
+					cart = [];
+					}
+				cart.push(item);
+				cartlen = cart.length
+				cart = JSON.stringify(cart);
+				document.cookie = `cart=${cart}; path=/; max-age=1296000`;
+				document.getElementById('cart_len').innerHTML=cartlen;
+				}
+
+		else{
+			cart = [item];
+			cart = JSON.stringify(cart);
+			document.cookie = `cart=${cart}; path=/; max-age=1296000`;
+		}
+
+		document.getElementById(el.id).innerHTML='Added';
+		document.getElementById(el.id).style.backgroundColor="#f51167";
+		setTimeout(function(){
+			document.getElementById(el.id).innerHTML='Shop Now';
+			document.getElementById(el.id).style.backgroundColor="#ff9999";
+		}, 3000);
+	}
+
+
+	function server_data(){
+		try{
+			var items = document.getElementById('cookies').value;
+		  	document.cookie = `cart=${items}; path=/; max-age=1296000`;
+		  	var cart = JSON.parse(items);
+		  	cartlen = cart.length;
+		  	document.getElementById('cart_len').innerHTML=cartlen;
+		}catch{
+			// console.log(cart)
+		}
+		results = document.cookie.match ( '(^|;) ?' + 'cart' + '=([^;]*)(;|$)' );
+		if ( results != null){
+			try{
+				cart = JSON.parse(results[2]);
+			}//try
+			catch{
+				document.getElementById('cart_len').innerHTML=0;
+			}// catch
+			cartlen = cart.length
+			document.getElementById('cart_len').innerHTML=cartlen;
+		}//if
+		else
+			document.getElementById('cart_len').innerHTML=0;
+	}
+
+   
+	</script>
+	<!--script src="{% static 'shop/js/stripe.js' %}"></script-->
+	<script src="{% static 'shop/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'shop/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'shop/js/jquery.slicknav.min.js' %}"></script>
+	<script src="{% static 'shop/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'shop/js/jquery.nicescroll.min.js' %}"></script>
+	<script src="{% static 'shop/js/jquery.zoom.min.js' %}"></script>
+	<script src="{% static 'shop/js/jquery-ui.min.js' %}"></script>
+	<script src="{% static 'shop/js/main.js' %}"></script>
+	</body>
+</html>

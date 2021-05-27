@@ -1,0 +1,106 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<h4>Checkout Step 2</h4>
+			<!--div class="site-pagination">
+				<a href="">Home</a> /
+				<a href="">Your cart</a>
+			</div-->
+		</div>
+	</div>
+	<!-- Page info end -->
+<!--<div>-->
+<!--<form action="{% url 'shop:charge' %}" method="post" id="payment-form">-->
+<!--    {% csrf_token %}-->
+<!--  <div class="form-row">-->
+<!--    <label for="card-element">-->
+<!--      Credit or debit card-->
+<!--    </label>-->
+<!--    <div id="card-element" style="width: 100%">-->
+<!--      &lt;!&ndash; A Stripe Element will be inserted here. &ndash;&gt;-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Used to display form errors. &ndash;&gt;-->
+<!--    <div id="card-errors" role="alert"></div>-->
+<!--  </div>-->
+
+<!--  <button>Submit Payment</button>-->
+<!--</form>-->
+<!--</div>-->
+	<!-- checkout section  -->
+	<section class="checkout-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 order-2 order-lg-1">
+					<form class="checkout-form" action="{% url 'shop:charge' %}" method="post" id="payment-form">
+						{% csrf_token %}
+						<div class="checkout-cart">
+						<h3>Delivery Address</h3>
+						<table border="1px" width="100%" style="border-radius: 20px 0 0 0">
+							<tr><td>Email:</td><td>{{email}}</td></tr>
+							<input type="hidden" name="email" value="{{email}}">
+							<tr><td>Phone:</td><td>{{phone}}</td></tr>
+							<input type="hidden" name="phone" value="{{phone}}">
+							<tr><td>Address</td><td>{{address|safe}}</td></tr>
+							<input type="hidden" name="address" value="{{address}}">
+							<tr><td>Comment:</td><td>{{comment}}</td></tr>
+							<input type="hidden" name="comment" value="{{comment}}">
+							<input type="hidden" name="delivery" value="{{delivery}}">
+						</table>
+						</div>
+						<br>
+						<div class="cf-title">
+						<table style="width: 100%">
+							<tbody>
+							<tr><td>Payment:</td><td style="text-align: right">€ {{ tprice }}</td></tr>
+							</tbody>
+						</table>
+						</div>
+						<!-- ============================================== -->
+						<ul class="payment-list">
+                            <div class="form-row">
+                                <label for="card-element">
+                                  Credit or debit card
+                                </label>
+                                <div id="card-element" style="width: 100%">
+                                  <!-- A Stripe Element will be inserted here. -->
+                            </div>
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+						</ul>
+						<!-- ============================================== -->
+						<button class="site-btn submit-order-btn">Place order</button>
+					</form>
+				</div>
+				<!-- ############  -->
+				<div class="col-lg-4 order-1 order-lg-2">
+					<div class="checkout-cart">
+						<h3>Your Order List</h3>
+						<ul class="product-list">
+							{% for i in products %}
+							<li>
+								<div class="pl-thumb"><img src="/media/{{i.photo}}" alt=""></div>
+								<h6>{{i.title}}</h6>
+								<p>€ {{i.price}}</p>
+							</li>
+							{% endfor %}
+						</ul>
+						<ul class="price-list">
+							<li>Total<span>€{{price}}</span></li>
+							<li>Shipping<span>€ {{ dprice }}</span></li>
+							<li class="total">Total<span>€{{ tprice }}</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- checkout section end -->
+<script src="{% static 'shop/js/stripe.js' %}"></script>
+{% endblock content %}

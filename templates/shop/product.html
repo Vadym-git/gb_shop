@@ -1,0 +1,258 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+<!-- product section -->
+	<section class="product-section">
+		<div class="container">
+			<!--div class="back-link">
+				<a href="./category.html"> &lt;&lt; Back to Category</a>
+			</div-->
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="product-pic-zoom">
+						<img class="product-big-img" src="/media/{{ product.photo }}" alt="">
+					</div>
+					<div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
+						<div class="product-thumbs-track">
+							{% for i in product.productphoto_set.all %}
+								<div class="pt" data-imgbigurl="/media/{{ i.image }}"><img src="/media/{{ i.image }}" alt=""></div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 product-details">
+					<h2 class="p-title">{{ product.title }}</h2>
+					<h3 class="p-price">€ {{ product.price }}</h3>
+					{% if quantity > 0 %}
+					<h4 class="p-stock">Available: <span>In Stock</span></h4>
+					{% else %}
+					<h4 class="p-stock">Available: <span>Out of stock</span></h4>
+					{% endif %}
+					<!--div class="p-rating">
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o fa-fade"></i>
+					</div>
+					<div class="p-review">
+						<a href="">3 reviews</a>|<a href="">Add your review</a>
+					</div-->
+					<br><br><br>
+					{% if sizes %}
+					<div class="fw-size-choose">
+						<h2 class="p-title">Size</h2>
+						{% for i in sizes %}
+						<div class="sc-item">
+							<input type="radio" name="sc" id="{{i}}">
+							<label for="{{i}}">{{i}}</label>
+						</div>
+						{% endfor %}
+						<br><br><br>
+					</div>
+					{%endif%}
+
+					<!--div class="filter-widget mb-0">
+							<h4 class="fw-title">color by</h4>
+							<div class="fw-color-choose">
+								<div class="cs-item">
+									<input type="radio" name="cs" id="gray-color">
+									<label class="cs-gray" for="gray-color"></label>
+								</div>
+							</div>
+					</div-->
+
+					{% if not product.draft %}
+					<div id="{{product.id}}" class="site-btn" onclick="add_prod(this);">SHOP NOW</div>
+					{% endif %}
+
+					<div id="accordion" class="accordion-area">
+						<div class="panel">
+							<div class="panel-header" id="headingOne">
+								<button class="panel-link active" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">information</button>
+							</div>
+							<div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+								<div class="panel-body">
+									{% if product.description %}
+									{{ product.description|safe }}
+									{% endif %}
+									EU sizes
+										<table>
+											<thead>
+											<tr><th>Size</th><th>Bust</th><th>Waist</th><th>Length</th></tr>
+											</thead>
+											<tbody>
+											<tr><td width="50">S</td><td width="55">86-88</td><td width="50">68-71</td><td >70</td></tr>
+											<tr><td width="50">M</td><td>88-91</td><td>73-76</td><td>71</td></tr>
+											<tr><td width="50">L</td><td>93-96</td><td>76-78</td><td>72</td></tr>
+											<tr><td width="50">XL</td><td>96-99</td><td>81-83</td><td>73</td></tr>
+											<tr><td width="50">XXL</td><td>99-102</td><td>83-88</td><td>74</td></tr>
+											</tbody>
+										</table>
+								</div>
+							</div>
+						</div>
+						{% if user.is_authenticated %}
+						<div class="panel">
+							<div class="panel-header" id="headingTwo">
+								<button class="panel-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">add review </button>
+							</div>
+							<div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+								<div class="panel-body">
+
+									<form enctype="multipart/form-data" class="contact-form" method="post" action="{% url 'shop:add_review' %}" id="review">
+										{% csrf_token %}
+										<textarea type="" name="review" placeholder="Your review"></textarea>
+										<input type="hidden" name="slug" value="{{product.slug}}">
+										<input type="hidden" name="id" value="{{product.id}}">
+									</form>
+									<input type="file" name="photo" placeholder="Your photo" form="review">
+										<button class="site-btn" form="review">Add</button>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						<br>
+						<!--
+						<div class="panel">
+							<div class="panel-header" id="headingThree">
+								<button class="panel-link" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">shipping & Returns</button>
+							</div>
+							<div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+								<div class="panel-body">
+									<p>Delivery <span>7 - 15 days</span></p>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
+								</div>
+							</div>
+						</div>
+						-->
+					</div>
+					<!--div class="social-sharing">
+						<a href=""><i class="fa fa-google-plus"></i></a>
+						<a href=""><i class="fa fa-pinterest"></i></a>
+						<a href=""><i class="fa fa-facebook"></i></a>
+						<a href=""><i class="fa fa-twitter"></i></a>
+						<a href=""><i class="fa fa-youtube"></i></a>
+					</div-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- product section end -->
+
+
+	<!-- RELATED PRODUCTS section -->
+<section>
+	<div class="container">
+			<div class="section-title">
+				<h4>REVIEWS</h4>
+			</div>
+		<div class="row">
+			{% for item in reviews reversed %}
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<img src="/media/{{item.photo}}" alt="">
+							<div class="pi-links">
+								<a class="add-card"><i class="flaticon-profile"></i><span>{{item.user_id.first_name}}</span></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<div class="pi-pic">
+									<table>
+										<tr><td style="word-break: break-all;">{{item.review}}</td></tr>
+									</table>
+								</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+	<section class="related-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>RELATED PRODUCTS</h2>
+			</div>
+			<div class="product-slider owl-carousel">
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="./img/product/1.jpg" alt="">
+						<div class="pi-links">
+							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>$35,00</h6>
+						<p>Flamboyant Pink Top </p>
+					</div>
+				</div>
+				<div class="product-item">
+					<div class="pi-pic">
+						<div class="tag-new">New</div>
+						<img src="./img/product/2.jpg" alt="">
+						<div class="pi-links">
+							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>$35,00</h6>
+						<p>Black and White Stripes Dress</p>
+					</div>
+				</div>
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="./img/product/3.jpg" alt="">
+						<div class="pi-links">
+							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>$35,00</h6>
+						<p>Flamboyant Pink Top </p>
+					</div>
+				</div>
+				<div class="product-item">
+						<div class="pi-pic">
+							<img src="./img/product/4.jpg" alt="">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>$35,00</h6>
+							<p>Flamboyant Pink Top </p>
+						</div>
+					</div>
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="./img/product/6.jpg" alt="">
+						<div class="pi-links">
+							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>$35,00</h6>
+						<p>Flamboyant Pink Top </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- RELATED PRODUCTS section end -->
+{% endblock content %}

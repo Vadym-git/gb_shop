@@ -1,0 +1,120 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<h4>success</h4>
+			<!--div class="site-pagination">
+				<a href="">Home</a> /
+				<a href="">Contact</a>
+			</div-->
+		</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- Contact section -->
+	<section class="contact-section">
+		<table align="center">
+			<tbody>
+			<tr><td>
+				<div align="center">
+					<img src="{{ STATIC_URL }}shop/img/{{img}}" alt="OK"><br>
+					<input type="hidden" id="cookies" value="">
+					<br>
+					{{text}}
+					<br>
+					{% if confirmation %}
+					<br>
+					<form class="contact-form" method="post" action="{% url 'shop:account' %}">
+						{% csrf_token %}
+						<input type="email" name="email" placeholder="Your email">
+						<input type="password" name="password" placeholder="Your password">
+						<button class="site-btn">Login</button>
+					</form>
+					{%endif%}
+					<br>
+					If you have any questions, please email to manager
+					<a href="mailto:sales@ohgirls.eu">will.support@ohgirls.eu</a>.
+				</div>
+			</td></tr>
+			</tbody>
+		</table>
+	</section>
+	<!-- Contact section end -->
+<br>
+
+	<!-- Related product section -->
+	<section class="related-product-section spad">
+		<div class="container">
+			<div class="section-title">
+				<h2>Your Favorites</h2>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<div class="tag-new">New</div>
+							<img src="./img/product/2.jpg" alt="">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>$35,00</h6>
+							<p>Black and White Stripes Dress</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<img src="./img/product/5.jpg" alt="">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>$35,00</h6>
+							<p>Flamboyant Pink Top </p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<img src="./img/product/9.jpg" alt="">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>$35,00</h6>
+							<p>Flamboyant Pink Top </p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<img src="./img/product/1.jpg" alt="">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>$35,00</h6>
+							<p>Flamboyant Pink Top </p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Related product section end -->
+{% endblock content %}
