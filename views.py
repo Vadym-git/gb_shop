@@ -16,7 +16,7 @@ from django.db.models.signals import pre_save
 
 # Create your views here.
 web_server = '/'
-stripe.api_key = 'sk_test_++++++++++++++++++++++++++'
+stripe.api_key = 'sk_test_+++++++++++++++++++++++++++'
 # ключь более не действителен
 
 
